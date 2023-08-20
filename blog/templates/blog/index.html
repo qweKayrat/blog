@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<h1>{{ title }}</h1>
+<ul>
+    {% for post in posts %}
+    <li>
+        <p class="first">Категория: {{ post.cat }}</p>
+        <div class="text">
+            {% if post.photo %}
+            <img src="{{ post.photo.url }}" alt="photo {{ post.title }}" class="image">
+            {% else %}
+            <img src="{% static 'blog/default.jpg' %}" class="image" alt="default image">
+            {% endif %}
+            <a href="{{ post.get_absolute_url }}"><h2>{{ post.title }}</h2></a>
+            <p>{{ post.content|striptags|truncatewords:50 }}</p>
+        </div>
+        <p class="date">Дата: {{ post.time_updated|date:"d-m-Y H:i:s" }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
